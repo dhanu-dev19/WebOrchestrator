@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Contact - iConstruction Bootstrap Template</title>
+  <title>Contact - WebOrchestrator</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -26,6 +26,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/popup.css" rel="stylesheet">
 
   <script type="module">
     // Import the functions you need from the SDKs you need
@@ -53,38 +54,53 @@ const db = getFirestore(app);
 // CONTACT FORM
   const contactForm = document.getElementById("contactForm");
 
-  if (contactForm) {
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+contactForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      await addDoc(collection(db, "contact_messages"), {
-        name: contactForm.name.value,
-        email: contactForm.email.value,
-        subject: contactForm.subject.value,
-        message: contactForm.message.value,
-        status: "new",
-        createdAt: serverTimestamp()
-      });
-
-      contactForm.reset();
-      document.querySelector(".sent-message").style.display = "block";
+  try {
+    await addDoc(collection(db, "contact_messages"), {
+      name: contactForm.name.value,
+      email: contactForm.email.value,
+      subject: contactForm.subject.value,
+      message: contactForm.message.value,
+      status: "new",
+      createdAt: serverTimestamp()
     });
+
+    contactForm.reset();
+    showSuccessPopup(); // ✅ popup trigger
+
+  } catch (error) {
+    console.error("Error saving message:", error);
+    alert("Something went wrong. Please try again.");
   }
+});
   </script>
+
   <script src="assets/js/includes.js"></script>
+
+
 </head>
 
 <body class="contact-page">
+    <div id="successPopup" class="success-popup">
+  <div class="success-box">
+    <div class="success-icon">✔</div>
+    <h4>Message Sent</h4>
+    <p>Thank you! We will get back to you soon.</p>
+    <button onclick="closeSuccessPopup()">OK</button>
+  </div>
+    </div>
 
  <div id="header-placeholder"></div>
 
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/construction/showcase-2.webp);">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/construction/showcase-2.png);">
       <div class="container position-relative">
         <h1>Contact</h1>
-        <p>Esse dolorum voluptatum ullam est sint nemo et est ipsa porro placeat quibusdam quia assumenda numquam molestias.</p>
+        <p>Reach out to discuss your ideas, goals, and digital growth strategy</p>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
@@ -100,7 +116,7 @@ const db = getFirestore(app);
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="contact-main-wrapper">
           <div class="map-wrapper">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <img src="assets/img/construction/about1.png"width="100%" height="100%" style="border:0;" alt="Map Overlay" class="map-overlay" />
           </div>
 
           <div class="contact-content">
@@ -111,7 +127,7 @@ const db = getFirestore(app);
                 </div>
                 <div class="contact-text">
                   <h4>Location</h4>
-                  <p>8721 Broadway Avenue, New York, NY 10023</p>
+                  <p>Karnataka, India</p>
                 </div>
               </div>
 
@@ -131,7 +147,8 @@ const db = getFirestore(app);
                 </div>
                 <div class="contact-text">
                   <h4>Call</h4>
-                  <p>+1 (212) 555-7890</p>
+                  <p>+91 8088757656</p>
+                  <p>+91 9353240289</p>
                 </div>
               </div>
 
@@ -141,16 +158,17 @@ const db = getFirestore(app);
                 </div>
                 <div class="contact-text">
                   <h4>Open Hours</h4>
-                  <p>Monday-Friday: 9AM - 6PM</p>
+                  <p>Always Available</p>
                 </div>
               </div>
             </div>
 
             <div class="contact-form-container" data-aos="fade-up" data-aos-delay="400">
               <h3>Get in Touch</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua consectetur adipiscing.</p>
+              <p>Fill out the form below and we'll get back to you as soon as possible.</p>
 
-              <form id="contactForm" method="post" class="php-email-form">
+              <form id="contactForm" class="php-email-form">
+
                 <div class="row">
                   <div class="col-md-6 form-group">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
@@ -169,7 +187,7 @@ const db = getFirestore(app);
                 <div class="my-3">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  <!--div class="sent-message">Your message has been sent. Thank you!</div -->
                 </div>
 
                 <div class="form-submit">
@@ -197,6 +215,9 @@ const db = getFirestore(app);
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <script src="assets/js/popup.js">
+</script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

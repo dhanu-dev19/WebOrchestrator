@@ -1,0 +1,72 @@
+/* Success Popup */
+.success-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.success-box {
+  background: #ffffff;
+  padding: 35px 40px;
+  border-radius: 18px;
+  text-align: center;
+  width: 90%;
+  max-width: 380px;
+  animation: successScale 0.3s ease;
+}
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.success-box h4 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.success-box p {
+  font-size: 15px;
+  color: #475569;
+  margin-bottom: 20px;
+}
+
+.success-box button {
+  background: linear-gradient(135deg, #1e88e5, #ec4899);
+  color: #ffffff;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.success-box button:hover {
+  opacity: 0.9;
+}
+
+/* Animation */
+@keyframes successScale {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -1,17 +1,9 @@
-/**
-* Template Name: iConstruction
-* Template URL: https://bootstrapmade.com/iconstruction-bootstrap-construction-template/
-* Updated: Jul 27 2025 with Bootstrap v5.3.7
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+
 
 (function() {
   "use strict";
 
-  /**
-   * Apply .scrolled class to the body as the page is scrolled down
-   */
+
   function toggleScrolled() {
     const selectBody = document.querySelector('body');
     const selectHeader = document.querySelector('#header');

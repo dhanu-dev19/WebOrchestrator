@@ -1,0 +1,206 @@
+.carousel-section {
+  width: 100%;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1284px;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+
+/* Track that moves horizontally */
+.hero-carousel__track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  gap: 20px;
+  padding: 0 10px;
+}
+
+/* Card as anchor tag */
+.hero-card {
+  flex: 0 0 calc(100% / 3 - 14px);
+  max-width: calc(1284px / 3 - 14px);
+  box-sizing: border-box;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.hero-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform :0.6s ease, filter 0.6s ease;
+  filter: brightness(0.9);
+  transform: scale(1.05);
+  border-radius: 18px;
+}
+
+.hero-card:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.05);
+}
+
+/* Navigation arrows */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  border: none;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.hero-carousel:hover .carousel-nav {
+  opacity: 1;
+}
+
+.carousel-nav:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.15);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.carousel-nav:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-nav svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.5;
+}
+
+.carousel-nav--prev {
+  left: 16px;
+}
+
+.carousel-nav--next {
+  right: 16px;
+}
+
+/* Card shadow and depth */
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.1) 0%,
+    transparent 30%,
+    rgba(0,0,0,0.1) 100%);
+  border-radius: 18px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 18px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    0 8px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 1;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.hero-card:hover::after {
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 20px 50px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Tablet: 2 cards visible */
+@media (max-width: 1023px) {
+  .hero-card {
+    flex: 0 0 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+    aspect-ratio: 16 / 9;
+  }
+
+  .carousel-section {
+    padding: 40px 15px;
+  }
+}
+
+/* Mobile: 1 card visible */
+@media (max-width: 767px) {
+  .hero-card {
+    flex: 0 0 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 0;
+  }
+
+  .hero-carousel {
+    max-width: 100%;
+  }
+
+  .carousel-nav {
+    opacity: 1;
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-section {
+    padding: 30px 12px;
+  }
+}
+
+/* Glow effect for active card */
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.2),
+      0 12px 40px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 10px 30px rgba(102, 126, 234, 0.25),
+      0 15px 45px rgba(102, 126, 234, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+.hero-card.active {
+  animation: subtleGlow 4s ease-in-out infinite;
+}
