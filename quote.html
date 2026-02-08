@@ -48,44 +48,59 @@ const firebaseConfig = {
   measurementId: "G-81XKJR2DD9"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// QUOTE FORM
-  const quoteForm = document.getElementById("quoteForm");
+const quoteForm = document.getElementById("quoteForm");
 
-  if (quoteForm) {
-    quoteForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+quoteForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-
+  // 1️⃣ Check reCAPTCHA
   const captchaResponse = grecaptcha.getResponse();
-
   if (!captchaResponse) {
-    alert("Please verify that you are not a robot.");
+    showError("Please verify that you are not a robot.");
     return;
   }
-      await addDoc(collection(db, "quote_requests"), {
-        name: quoteForm.name.value,
-        email: quoteForm.email.value,
-        phone: quoteForm.phone.value,
-        type: quoteForm.type.value,
-        timeline: quoteForm.timeline.value,
-        budget: quoteForm.budget.value || "",
-        message: quoteForm.message.value,
-        status: "new",
-        createdAt: serverTimestamp()
-      });
 
-      grecaptcha.reset();
-      quoteForm.reset();
-      document.querySelector(".sent-message").style.display = "block";
+  try {
+    // 2️⃣ Save to Firestore
+    await addDoc(collection(db, "quote_requests"), {
+      name: quoteForm.name.value,
+      email: quoteForm.email.value,
+      phone: quoteForm.phone.value,
+      type: quoteForm.type.value,
+      timeline: quoteForm.timeline.value,
+      budget: quoteForm.budget.value || "",
+      message: quoteForm.message.value,
+      status: "new",
+      createdAt: serverTimestamp()
     });
+
+    // 3️⃣ ONLY NOW show success
+    grecaptcha.reset();
+    quoteForm.reset();
+    showSuccessPopup();
+
+  } catch (err) {
+    console.error(err);
+    showError("Something went wrong. Please try again later.");
   }
+});
+
+// UI helpers
+function showSuccessPopup() {
+  document.getElementById("successPopup").style.display = "flex";
+}
+
+function showError(msg) {
+  const el = document.querySelector(".error-message");
+  el.textContent = msg;
+  el.style.display = "block";
+}
 </script>
 <script src="assets/js/includes.js"></script>
- <script src="https://www.google.com/recaptcha/api.js"></script>
+
 </head>
 
 
@@ -104,7 +119,7 @@ const db = getFirestore(app);
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/construction/showcase-2.png);">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/construction/showcase-2.webp);">
       <div class="container position-relative">
         <h1>Connect Us</h1>
         <p>Let’s collaborate and transform your vision into scalable digital reality.</p>
@@ -170,7 +185,7 @@ const db = getFirestore(app);
                       </div>
                       <div class="contact-detail">
                         <i class="bi bi-envelope-fill"></i>
-                        <span>estimates@constructpro.com</span>
+                        <span>web0rchestrator@gmail.com</span>
                       </div>
                     </div>
                   </div>
@@ -183,7 +198,7 @@ const db = getFirestore(app);
                       <p>Share your project details and receive a comprehensive estimate tailored to your specific needs.</p>
                     </div>
 
-                    <form id="quoteForm" method="post" class="php-email-form" onsubmit="showSuccessPopup(event)">
+                    <form id="quoteForm"  class="php-email-form" >
                       <div class="form-grid">
                         <div class="form-field">
                           <label for="fullname">Full Name</label>
@@ -270,6 +285,7 @@ const db = getFirestore(app);
 
 
 
+  <script src="https://www.google.com/recaptcha/api.js"></script>
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
