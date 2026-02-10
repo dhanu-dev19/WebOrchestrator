@@ -32,33 +32,8 @@
     // Import the functions you need from the SDKs you need
  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";const firebaseConfig={apiKey:"AIzaSyCLuF-4Fv-6cH7G6ZqcUSigJWzVtPSMLFs",authDomain:"weborchestrator-dc5c6.firebaseapp.com",projectId:"weborchestrator-dc5c6",storageBucket:"weborchestrator-dc5c6.firebasestorage.app",messagingSenderId:"787679558742",appId:"1:787679558742:web:14ffe1cba424be8ca1cff7",measurementId:"G-81XKJR2DD9"};
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-// CONTACT FORM
-  const contactForm = document.getElementById("contactForm");
 
-contactForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  try {
-    await addDoc(collection(db, "contact_messages"), {
-      name: contactForm.name.value,
-      email: contactForm.email.value,
-      subject: contactForm.subject.value,
-      message: contactForm.message.value,
-      status: "new",
-      createdAt: serverTimestamp()
-    });
-
-    contactForm.reset();
-    showSuccessPopup(); // ✅ popup trigger
-
-  } catch (error) {
-    console.error("Error saving message:", error);
-    alert("Something went wrong. Please try again.");
-  }
-});
+const app=initializeApp(firebaseConfig),db=getFirestore(app),contactForm=document.getElementById("contactForm");contactForm.addEventListener("submit",(async e=>{e.preventDefault();try{await addDoc(collection(db,"contact_messages"),{name:contactForm.name.value,email:contactForm.email.value,subject:contactForm.subject.value,message:contactForm.message.value,status:"new",createdAt:serverTimestamp()}),contactForm.reset(),showSuccessPopup()}catch(e){console.error("Error saving message:",e),alert("Something went wrong. Please try again.")}}));
   </script>
 
 
@@ -255,15 +230,14 @@ contactForm.addEventListener("submit", async (e) => {
 </script>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"defer></script>
+  <script src="assets/vendor/aos/aos.js" defer></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js" defer></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js" defer></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js" defer></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/includes.js"></script>
+  <script src="assets/js/main.js" defer></script>
 
 </body>
 

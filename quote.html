@@ -32,56 +32,7 @@
     // Import the functions you need from the SDKs you need
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";const firebaseConfig={apiKey:"AIzaSyCLuF-4Fv-6cH7G6ZqcUSigJWzVtPSMLFs",authDomain:"weborchestrator-dc5c6.firebaseapp.com",projectId:"weborchestrator-dc5c6",storageBucket:"weborchestrator-dc5c6.firebasestorage.app",messagingSenderId:"787679558742",appId:"1:787679558742:web:14ffe1cba424be8ca1cff7",measurementId:"G-81XKJR2DD9"};
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const quoteForm = document.getElementById("quoteForm");
-
-quoteForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  // 1️⃣ Check reCAPTCHA
-  const captchaResponse = grecaptcha.getResponse();
-  if (!captchaResponse) {
-    showError("Please verify that you are not a robot.");
-    return;
-  }
-
-  try {
-    // 2️⃣ Save to Firestore
-    await addDoc(collection(db, "quote_requests"), {
-      name: quoteForm.name.value,
-      email: quoteForm.email.value,
-      phone: quoteForm.phone.value,
-      type: quoteForm.type.value,
-      timeline: quoteForm.timeline.value,
-      budget: quoteForm.budget.value || "",
-      message: quoteForm.message.value,
-      status: "new",
-      createdAt: serverTimestamp()
-    });
-
-    // 3️⃣ ONLY NOW show success
-    grecaptcha.reset();
-    quoteForm.reset();
-    showSuccessPopup();
-
-  } catch (err) {
-    console.error(err);
-    showError("Something went wrong. Please try again later.");
-  }
-});
-
-// UI helpers
-function showSuccessPopup() {
-  document.getElementById("successPopup").style.display = "flex";
-}
-
-function showError(msg) {
-  const el = document.querySelector(".error-message");
-  el.textContent = msg;
-  el.style.display = "block";
-}
+const app=initializeApp(firebaseConfig),db=getFirestore(app),quoteForm=document.getElementById("quoteForm");function showSuccessPopup(){document.getElementById("successPopup").style.display="flex"}function showError(e){const t=document.querySelector(".error-message");t.textContent=e,t.style.display="block"}quoteForm.addEventListener("submit",(async e=>{e.preventDefault();if(grecaptcha.getResponse())try{await addDoc(collection(db,"quote_requests"),{name:quoteForm.name.value,email:quoteForm.email.value,phone:quoteForm.phone.value,type:quoteForm.type.value,timeline:quoteForm.timeline.value,budget:quoteForm.budget.value||"",message:quoteForm.message.value,status:"new",createdAt:serverTimestamp()}),grecaptcha.reset(),quoteForm.reset(),showSuccessPopup()}catch(e){console.error(e),showError("Something went wrong. Please try again later.")}else showError("Please verify that you are not a robot.")}));
 </script>
 
 
@@ -102,8 +53,7 @@ function showError(msg) {
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.webp" alt=""> -->
+
         <h1 class="sitename" style="font-family:Arial, sans-serif; font-weight:700; letter-spacing:-0.5px;">
   Web<span style="
     display:inline;
@@ -321,18 +271,16 @@ function showError(msg) {
 
 
 
-  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js" defer></script>
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
   <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js" defer></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js" defer></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/includes.js"></script>
-  <script src="assets/js/popup.js"></script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/popup.js" defer></script>
 
 </body>
 
